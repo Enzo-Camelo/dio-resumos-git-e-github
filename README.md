@@ -8,6 +8,32 @@ Meu resumo sobre as aulas da professora Eli do curso da DIO **"Suzano - Python D
 - [elidianaandrade](https://github.com/elidianaandrade?tab=repositories)
 - [commits da eli](https://github.com/elidianaandrade/elidianaandrade/commits/main/)
 
+# Conceitos
+
+- **Repositório** (Repository) – Um diretório onde o Git armazena todo o histórico do projeto, incluindo commits, branches e arquivos versionados
+
+- **Commit** – Um "snapshot" do código em um determinado momento. Cada commit tem um identificador único (hash) e pode conter mensagens descritivas
+
+- **Branch** – Um ramo independente do repositório que permite desenvolver novas funcionalidades sem afetar o código principal. O branch principal geralmente é chamado de main (ou master)
+
+- **Merge** – O processo de combinar mudanças de um branch para outro
+
+- **Checkout** – Comando usado para mudar entre branches ou restaurar arquivos de versões anteriores
+
+- **Clone** – Cópia de um repositório remoto para um computador local
+
+- **Pull** – Atualiza o repositório local com as últimas mudanças do repositório remoto
+
+- **Push** – Envia os commits locais para o repositório remoto
+
+- **Staging Area** (Área de Preparação) – Um espaço intermediário onde as alterações são organizadas antes de serem commitadas
+
+- **Blame** – Mostra quem fez a última modificação em cada linha de um arquivo
+
+- **Tag** – Um marcador usado para identificar versões específicas no histórico do repositório
+
+- **Fork** – Uma cópia de um repositório remoto em outra conta, geralmente usada para contribuir com projetos de código aberto
+
 # 💻 Versionamento de código
 
 ## ⚙⚙ Sistemas de Controle de Versão
@@ -199,7 +225,7 @@ git init
 ```
 - Transforma a pasta em um repositório Git
 
-## Obs: O diretório ".git" é responsável por gerenciar os arquivos responsáveis pelo controle de versão
+### Obs: O diretório ".git" é responsável por gerenciar os arquivos responsáveis pelo controle de versão
 
 ## Conectando o repositório local com o repo remoto
 
@@ -207,10 +233,33 @@ git init
 git remote add origin [URL do repositório remoto]
 ```
 
+# ✅ Salvando alterações no repositório local
 
+```
+git status
+```
+- Mostra o status da nossa árvore de trabalho e da área de preparação (index), staging area
 
+```
+touch README.md
+```
+- Cria um arquivo vazio
 
+### Após alterar o arquivo README.md 
 
-# 🔍 Referências 
-- [Digital Innovation One]().
+```
+git add README.md
+```
+- Adiciona o arquivo na área de preparação
 
+```
+git commit -m"[Descrição do commit]"
+```
+- Insere em um commit
+
+```
+git log
+```
+-  Exibe os commits, autor, email, e hash do commit
+
+parei em "salvando alterações no repositorio local minuto 11:37
