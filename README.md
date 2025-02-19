@@ -166,7 +166,7 @@ git config --global init.defaultBranch "main"
  - git config --global credential.helper store (permanentemente, apenas eu utilizo)
  - git config --global credential.helper cache (temporário)
 
- # Comandos aprendidos nessa aula
+ ## Comandos aprendidos nessa aula
 
  ```
  git config --global --show-origin credential.helper
@@ -262,4 +262,197 @@ git log
 ```
 -  Exibe os commits, autor, email, e hash do commit
 
-parei em "salvando alterações no repositorio local minuto 11:37
+### Identificando um diretório vazio
+
+```
+touch [Nome da pasta]/.gitkeep
+```
+- É um arquivo vazio usado para forçar o Git a versionar diretórios vazios. O Git não rastreia diretórios vazios por padrão, apenas arquivos dentro deles.
+
+```
+git add .
+```
+- Adiciona todas as alterações (novos arquivos, modificações e exclusões) do diretório atual e seus subdiretórios ao staging area do Git.
+- Depois disso dar um "git commit -m" ""
+
+## 📌 Diferença entre .gitkeep e .gitignore
+
+- .gitkeep: Um arquivo real (embora vazio) criado para manter diretórios vazios no repositório.
+
+- .gitignore: Um arquivo usado para dizer ao Git quais arquivos ou diretórios ele deve ignorar e não rastrear.
+
+# ⌛ Desfazendo alterações no repositório local
+
+### Caso tenha feito alterações no repositório e queira voltar como estava antes
+
+```
+git restore README.md
+```
+- Restaura a versão antes da alteração
+
+```
+git commit --amend -m"[Novo titulo do commit]"
+```
+- Altera o título do último commit feito
+
+### Desfazer o commit, retornando para o anterior
+
+```
+git reset --soft [Hash do commit]
+```
+- É usado para desfazer commits recentes, mas mantendo as alterações no staging area.
+
+```
+git reset --mixed
+```
+- Desfaz um commit e remove as alterações do staging area, mas mantém as modificações no seu diretório de trabalho.
+
+```
+git reset --hard
+```
+- Desfaz um commit e remove todas as alterações no código, retornando o repositório ao estado exato do commit escolhido. ⚠️ Essa operação é irreversível!
+
+```
+git reflog
+```
+- Exibe o histórico de referências dos HEADs e branches, permitindo recuperar commits perdidos, inclusive após um git reset --hard.
+
+# 📤 Enviando e baixando alterações com o repositório remoto
+
+- Cria um repositório no GitHub
+- Publico ou privado
+- Sem README.me
+- Abrir o Git Bash na pasta desejada
+
+```
+git remote add origin [URL do repositório do github(remoto)]
+```
+-  Adiciona um repositório remoto ao seu projeto Git local, permitindo que você envie (push) e receba (pull) alterações desse repositório.
+
+```
+git push -u origin main
+```
+- Envia seus commits do branch main para o repositório remoto chamado origin e define esse branch como o padrão para futuros git push e git pull.
+
+- Feito isso tudo, atualize a página do repositório remoto e já estará com as alterações locais no remoto
+- Pode alterar o repositório remoto pelo GitHub mesmo, e após alterar deve salvar em um novo commit
+
+## Como baixar as alterações do repositório remoto para o local
+
+- No Git Bash
+
+```
+git pull
+```
+- "Puxa" as alterações do repositório remoto para o local (busca e mescla)
+
+# 🌿 Trabalhando com branches 
+
+## Uma branch é uma ramificação do projeto
+
+- ### É um ponteiro móvel para um commit do histórico do repositório
+- ### Quando você cria uma branch a partir de outra existente, a nova se inicia apontando para o mesmo commit a branch que estava quando foi criada
+
+---
+
+### 🛠️ Como funcionam?
+
+Quando você inicia um repositório (`git init`), o Git cria um branch padrão chamado `main`. Você pode criar **novos branches** para testar funcionalidades, corrigir bugs ou desenvolver recursos sem afetar o código principal.  
+
+---
+
+### ✨ Exemplo prático:
+
+#### 1️⃣ Criando um novo branch:
+```sh
+git branch nova-feature
+```
+- Isso cria um branch chamado `nova-feature`, mas você ainda está no `main`.
+
+#### 2️⃣ Mudando para o novo branch:
+```sh
+git checkout nova-feature
+```
+Ou, em versões mais recentes do Git:
+```sh
+git switch nova-feature
+```
+- Agora você pode trabalhar no novo branch sem afetar o `main`.
+
+#### 3️⃣ Fazendo alterações e commitando:
+```sh
+git add .
+git commit -m "Adicionando nova funcionalidade"
+```
+
+#### 4️⃣ Voltando para o `main`:
+```sh
+git checkout main  # Ou: git switch main
+```
+
+#### 5️⃣ Unindo o branch ao `main` (Merge):
+```sh
+git merge nova-feature
+```
+
+#### 6️⃣ Removendo o branch após a fusão:
+```sh
+git branch -d nova-feature
+```
+
+---
+
+### 📌 Comandos úteis:
+| Comando                     | O que faz? |
+|-----------------------------|-----------|
+| `git branch`                | Lista todos os branches no repositório. |
+| `git branch nome-do-branch` | Cria um novo branch. |
+| `git checkout nome-do-branch` | Troca para um branch específico (versões antigas). |
+| `git switch nome-do-branch` | Troca para um branch (versões mais novas). |
+| `git merge nome-do-branch` | Mescla o branch com o atual. |
+| `git branch -d nome-do-branch` | Deleta um branch local. |
+| `git push origin --delete nome-do-branch` | Deleta um branch remoto. |
+
+---
+
+### 🎯 Por que usar branches?
+✅ **Evita conflitos** ao permitir que várias pessoas trabalhem no mesmo projeto.  
+✅ **Facilita testes** sem afetar a versão estável do código.  
+✅ **Permite rollback** caso algo dê errado, basta deletar o branch sem impactar o `main`.  
+
+Branches são fundamentais para um bom fluxo de desenvolvimento com Git! 🚀
+
+# Comandos úteis no dia a dia
+
+## Para baixar as alterações do repositório remoto sem mesclar com o repositório local
+
+```
+git fetch origin main
+```
+- Baixa as alterações
+
+```
+git diff main origin/main
+```
+```
+git merge origin/main
+```
+- Traz as alterações do remoto para o local
+
+## Clonar o repositório com várias branches e você só quer uma delas
+
+```
+git clone [URL do repositório remoto] --branch [Nome da branch] --single-branch
+```
+## Criar nova branch sem a modificação ir junto
+
+```
+git stash
+```
+
+# 🔍 Links e materiais de apoio
+
+- [Github eli sobre curso dio](https://github.com/elidianaandrade/dio-curso-git-github)
+
+- [Slides](https://academiapme-my.sharepoint.com/:p:/g/personal/renato_dio_me/EYjkgVZuUv5HsVgJUEPv1_oB_QWs8MFBY_PBQ2UAtLqucg?rtime=iFZEPApR3Ug)
+
